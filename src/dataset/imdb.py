@@ -85,6 +85,8 @@ class imdb(object):
     images, scales = [], []
     for i in batch_idx:
       im = cv2.imread(self._image_path_at(i))
+      if im is None:
+	continue
       im = im.astype(np.float32, copy=False)
       im -= mc.BGR_MEANS
       orig_h, orig_w, _ = [float(v) for v in im.shape]
