@@ -139,7 +139,13 @@ class imdb(object):
       num_zero_iou_obj = 0
 
     for idx in batch_idx:
+
       # load the image
+      im = cv2.imread(self._image_path_at(idx))
+      if im is None:
+	print(self._image_path_at(idx))
+	print(batch_idx)
+	continue
       im = cv2.imread(self._image_path_at(idx)).astype(np.float32, copy=False)
       im -= mc.BGR_MEANS
       orig_h, orig_w, _ = [float(v) for v in im.shape]
