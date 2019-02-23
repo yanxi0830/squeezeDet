@@ -45,13 +45,14 @@ def video_demo():
   """Detect videos."""
 
   cap = cv2.VideoCapture(FLAGS.input_path)
-
   # Define the codec and create VideoWriter object
   # fourcc = cv2.cv.CV_FOURCC(*'XVID')
   # fourcc = cv2.cv.CV_FOURCC(*'MJPG')
-  # in_file_name = os.path.split(FLAGS.input_path)[1]
-  # out_file_name = os.path.join(FLAGS.out_dir, 'out_'+in_file_name)
-  # out = cv2.VideoWriter(out_file_name, fourcc, 30.0, (375,1242), True)
+  fourcc = cv2.VideoWriter_fourcc(*"XVID")
+  in_file_name = os.path.split(FLAGS.input_path)[1]
+  out_file_name = os.path.join(FLAGS.out_dir, 'out_video.avi')
+  # video = cv2.VideoWriter(out_file_name, -1, 1, (512,624))
+  out = cv2.VideoWriter(out_file_name, fourcc, 20.0, (624,512))
   # out = VideoWriter(out_file_name, frameSize=(1242, 375))
   # out.open()
 
@@ -73,7 +74,7 @@ def video_demo():
       model = SqueezeDetPlus(mc, FLAGS.gpu)
 
     saver = tf.train.Saver(model.model_params)
-
+    saver = tf.train.import_meta_graph('{}.meta'.format(FLAGS.checkpoint))
     with tf.Session(config=tf.ConfigProto(allow_soft_placement=True)) as sess:
       saver.restore(sess, FLAGS.checkpoint)
 
@@ -88,7 +89,9 @@ def video_demo():
         ret, frame = cap.read()
         if ret==True:
           # crop frames
-          frame = frame[500:-205, 239:-439, :]
+          #print(frame.shape)
+          #frame = frame[:512, :624, :]
+          frame = cv2.resize(frame, (624, 512))
           im_input = frame.astype(np.float32) - mc.BGR_MEANS
         else:
           break
@@ -121,9 +124,9 @@ def video_demo():
 
         # TODO(bichen): move this color dict to configuration file
         cls2clr = {
-            'car': (255, 191, 0),
-            'cyclist': (0, 191, 255),
-            'pedestrian':(255, 0, 191)
+            'green': (0, 255, 0),
+            'off': (255, 0, 0),
+            'red':(0, 0, 255)
         }
         _draw_box(
             frame, final_boxes,
@@ -136,7 +139,7 @@ def video_demo():
         times['draw']= t_draw - t_filter
 
         cv2.imwrite(out_im_name, frame)
-        # out.write(frame)
+        out.write(frame)
 
         times['total']= time.time() - t_start
 
@@ -154,7 +157,7 @@ def video_demo():
             break
   # Release everything if job is finished
   cap.release()
-  # out.release()
+  out.release()
   cv2.destroyAllWindows()
 
 
@@ -206,9 +209,9 @@ def image_demo():
 
         # TODO(bichen): move this color dict to configuration file
         cls2clr = {
-            'car': (255, 191, 0),
-            'cyclist': (0, 191, 255),
-            'pedestrian':(255, 0, 191)
+            'red': (255, 191, 0),
+            'green': (0, 191, 255),
+            'off':(255, 0, 191)
         }
 
         # Draw boxes
