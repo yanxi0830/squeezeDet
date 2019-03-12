@@ -7,7 +7,7 @@ name=$1
 image_list_path=$2
 label_list_path=$3
 
-source env/bin/activate
+source ~/lns/xiyan/venv/squeezeDet/bin/activate
 
 mkdir $DATA_PATH
 mkdir "$DATA_PATH/$name"
