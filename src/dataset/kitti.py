@@ -68,9 +68,15 @@ class kitti(imdb):
     remove_list = []
     for index in self._image_idx:
       filename = os.path.join(self._label_path, index+'.txt')
-      if index.endswith('.png'):
+      if index.endswith('.png') or not os.path.exists(filename):
 	remove_list.append(index)
 	continue
+      imagepath = os.path.join(self._image_path, index+'.png')
+      im = cv2.imread(imagepath)
+      if im is None:
+        print("Corrupted Image: ", imagepath)
+        remove_list.append(index)
+        continue
       with open(filename, 'r') as f:
         lines = f.readlines()
       f.close()

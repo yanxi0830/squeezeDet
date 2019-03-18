@@ -28,7 +28,7 @@ def base_model_config(dataset='PASCAL_VOC'):
         # cfg.CLASS_NAMES = ('red', 'green', 'off')
         cfg.CLASS_NAMES = (
         'donotenter', 'handicappedparking', 'leftarrow', 'leftturnonly', 'rightarrow', 'rightturnonly', 'speedlimit10',
-        'speedlimit15', 'speedlimit20', 'speedlimit5', 'red', 'green', 'off')
+        'speedlimit15', 'speedlimit20', 'speedlimit5', 'red', 'green', 'off', 'sign')
 
 
     # number of categories to classify
