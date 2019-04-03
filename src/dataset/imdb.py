@@ -185,9 +185,9 @@ class imdb(object):
           im = distorted_im
 
         # Flip image with 50% probability
-        if np.random.randint(2) > 0.5:
-          im = im[:, ::-1, :]
-          gt_bbox[:, 0] = orig_w - 1 - gt_bbox[:, 0]
+        # if np.random.randint(2) > 0.5:
+        #   im = im[:, ::-1, :]
+        #   gt_bbox[:, 0] = orig_w - 1 - gt_bbox[:, 0]
 
       # scale image
       im = cv2.resize(im, (mc.IMAGE_WIDTH, mc.IMAGE_HEIGHT))
