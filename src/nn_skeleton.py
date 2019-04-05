@@ -331,17 +331,24 @@ class ModelSkeleton:
     mc = self.mc
 
     self.global_step = tf.Variable(0, name='global_step', trainable=False)
-    lr = tf.train.exponential_decay(mc.LEARNING_RATE,
-                                    self.global_step,
-                                    mc.DECAY_STEPS,
-                                    mc.LR_DECAY_FACTOR,
-                                    staircase=True)
+    
+    if self.mc.ADAM:
+        lr = mc.LEARNING_RATE
+    else:
+        lr = tf.train.exponential_decay(mc.LEARNING_RATE,
+                                        self.global_step,
+                                        mc.DECAY_STEPS,
+                                        mc.LR_DECAY_FACTOR,
+                                        staircase=True)
 
     tf.summary.scalar('learning_rate', lr)
 
     _add_loss_summaries(self.loss)
-
-    opt = tf.train.MomentumOptimizer(learning_rate=lr, momentum=mc.MOMENTUM)
+    
+    if self.mc.ADAM:
+        opt = tf.train.AdamOptimizer(learning_rate=lr, beta1=0.9, beta2=0.999, epsilon=1e-08)
+    else:
+        opt = tf.train.MomentumOptimizer(learning_rate=lr, momentum=mc.MOMENTUM)
     grads_vars = opt.compute_gradients(self.loss, tf.trainable_variables())
 
     with tf.variable_scope('clip_gradient') as scope:

@@ -62,7 +62,7 @@ def base_model_config(dataset='PASCAL_VOC'):
     cfg.ANCHOR_PER_GRID = -1
 
     # batch size
-    cfg.BATCH_SIZE = 20
+    cfg.BATCH_SIZE = 10
 
     # Only keep boxes with probability higher than this threshold
     cfg.PROB_THRESH = 0.005
@@ -93,13 +93,13 @@ def base_model_config(dataset='PASCAL_VOC'):
     cfg.LR_DECAY_FACTOR = 0.1
 
     # learning rate
-    cfg.LEARNING_RATE = 0.005
+    cfg.LEARNING_RATE = 0.001
 
     # momentum
     cfg.MOMENTUM = 0.9
 
     # weight decay
-    cfg.WEIGHT_DECAY = 0.0005
+    cfg.WEIGHT_DECAY = 0.0001
 
     # wether to load pre-trained model
     cfg.LOAD_PRETRAINED_MODEL = True
