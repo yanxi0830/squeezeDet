@@ -29,7 +29,7 @@ def base_model_config(dataset='PASCAL_VOC'):
         # cfg.CLASS_NAMES = (
         # 'donotenter', 'handicappedparking', 'leftarrow', 'leftturnonly', 'rightarrow', 'rightturnonly', 'speedlimit10',
         # 'speedlimit15', 'speedlimit20', 'speedlimit5', 'red', 'green', 'off', 'sign', 'light')
-        cfg.CLASS_NAMES = ('handicapparking', 'stop', 'donotenter', 'leftturnonly(arrow)', 'leftturnonly(words)', 'rightturnonly(words)', 'rightturnonly(arrow)', 'speedlimit5', 'speedlimit10', 'speedlimit15', 'speedlimit20', 'railroadsign', 'railroadlightpairon', 'railroadlightpairoff')
+        cfg.CLASS_NAMES = ('handicapparking', 'stop', 'donotenter', 'leftturnonly(arrow)', 'leftturnonly(words)', 'rightturnonly(words)', 'rightturnonly(arrow)', 'speedlimit5', 'speedlimit10', 'speedlimit15', 'speedlimit20')
 
     # number of categories to classify
     cfg.CLASSES = len(cfg.CLASS_NAMES)
