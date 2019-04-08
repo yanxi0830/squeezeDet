@@ -182,6 +182,7 @@ def image_demo():
       model = SqueezeDetPlus(mc, FLAGS.gpu)
 
     saver = tf.train.Saver(model.model_params)
+    saver = tf.train.import_meta_graph('{}.meta'.format(FLAGS.checkpoint))
 
     with tf.Session(config=tf.ConfigProto(allow_soft_placement=True)) as sess:
       saver.restore(sess, FLAGS.checkpoint)
@@ -209,7 +210,7 @@ def image_demo():
 
         # TODO(bichen): move this color dict to configuration file
         cls2clr = {
-            'red': (255, 191, 0),
+            'light': (255, 191, 0),
             'green': (0, 191, 255),
             'off':(255, 0, 191)
         }
