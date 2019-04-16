@@ -47,10 +47,10 @@ def base_model_config(dataset='PASCAL_VOC'):
     cfg.KEEP_PROB = 0.5
 
     # image width
-    cfg.IMAGE_WIDTH = 224
+    cfg.IMAGE_WIDTH = 1224
 
     # image height
-    cfg.IMAGE_HEIGHT = 224
+    cfg.IMAGE_HEIGHT = 512
 
     # anchor box, array of [cx, cy, w, h]. To be defined later
     cfg.ANCHOR_BOX = []

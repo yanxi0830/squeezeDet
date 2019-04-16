@@ -12,10 +12,12 @@ def kitti_squeezeDet_config():
 
   # mc.IMAGE_WIDTH           = 1248
   # mc.IMAGE_HEIGHT          = 384
-  mc.IMAGE_WIDTH           = 624    # 2448 / 4 -> 39 x 16
-  mc.IMAGE_HEIGHT          = 512    # 2048 / 4
+  # mc.IMAGE_WIDTH           = 624    # 2448 / 4 -> 39 x 16
+  # mc.IMAGE_HEIGHT          = 512    # 2048 / 4
   # mc.IMAGE_WIDTH           = 1232    # 2448 / 2 -> 77 x 16
   # mc.IMAGE_HEIGHT          = 1024    # 2048 / 2
+  mc.IMAGE_WIDTH           = 1216    # 1224 -> 76 x 16 = 1216
+  mc.IMAGE_HEIGHT          = 512     # 512 -> 32 x 16
   mc.BATCH_SIZE            = 20
 
   mc.WEIGHT_DECAY          = 0.0001
@@ -47,7 +49,7 @@ def kitti_squeezeDet_config():
   return mc
 
 def set_anchors(mc):
-  H, W, B = 32, 39, 9   # IMAGE_HEIGHT/WIDTH / 16
+  H, W, B = 32, 76, 9   # IMAGE_HEIGHT/WIDTH / 16
   anchor_shapes = np.reshape(
       [np.array(
           [[5., 10.], [8., 18.], [12., 27.],
@@ -58,7 +60,7 @@ def set_anchors(mc):
   center_x = np.reshape(
       np.transpose(
           np.reshape(
-              np.array([np.arange(1, W+1)*float(mc.IMAGE_WIDTH)/(W+1)]*H*B), 
+              np.array([np.arange(1, W+1)*float(mc.IMAGE_WIDTH)/(W+1)]*H*B),
               (B, H, W)
           ),
           (1, 2, 0)

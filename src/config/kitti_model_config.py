@@ -15,8 +15,10 @@ def kitti_model_config():
   # mc.IMAGE_HEIGHT          = 384 # half height 187
   # mc.IMAGE_WIDTH           = 621
   # mc.IMAGE_HEIGHT          = 187
-  mc.IMAGE_WIDTH           = 624    # 2448 / 4 -> 39 x 16
-  mc.IMAGE_HEIGHT          = 512    # 2048 / 4
+  # mc.IMAGE_WIDTH           = 624    # 2448 / 4 -> 39 x 16
+  # mc.IMAGE_HEIGHT          = 512    # 2048 / 4
+  mc.IMAGE_WIDTH             = 1216   # 1224 -> 76 x 16
+  mc.IMAGE_HEIGHT            = 512    # 512 -> 32 x 16
   # mc.IMAGE_WIDTH           = 1232    # 2448 / 2 -> 77 x 16
   # mc.IMAGE_HEIGHT          = 1024    # 2048 / 2 (memory issue)
 
@@ -47,12 +49,12 @@ def kitti_model_config():
   return mc
 
 def set_anchors(mc):
-  H, W, B = 32, 39, 9   # IMAGE_HEIGHT/WIDTH / 16
+  H, W, B = 32, 76, 9   # IMAGE_HEIGHT/WIDTH / 16
   anchor_shapes = np.reshape(
       [np.array(
-          [[5., 11.], [8., 17.], [11., 25.],
-           [16., 38.], [27., 56.], [88., 121.],
-           [144., 198.], [233., 318.], [404., 543.]])] * H * W,
+          [[5., 10.], [8., 18.], [12., 27.],
+           [17., 37.], [23., 49.], [23., 14.],
+           [30., 64.], [40., 86.], [64., 127.]])] * H * W,
       (H, W, B, 2)
   )
   center_x = np.reshape(
